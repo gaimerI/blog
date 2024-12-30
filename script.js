@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevPageBtn = document.getElementById("prev-page");
     const nextPageBtn = document.getElementById("next-page");
     const postForm = document.getElementById("post-form");
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
 
     let posts = [];
     let filteredPosts = [];
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(data => {
-            posts = data;
+            posts = data.map(post => ({ ...post, likes: 0 })); // Initialize likes for posts
             filteredPosts = [...posts];
             renderPosts();
         })
@@ -93,7 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const newPost = {
             title: document.getElementById("post-title").value,
             author: document.getElementById("post-author").value,
-            content: document.getElementById("post-content").value
+            content: document.getElementById("post-content").value,
+            category: document.getElementById("post-category").value,
+            likes: 0
         };
 
         posts.push(newPost);
@@ -104,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         postForm.reset();
     });
 
-    // Function to create a post element
+    // Create a post element
     function createPostElement(post) {
         const postDiv = document.createElement("div");
         postDiv.className = "post";
@@ -115,13 +118,61 @@ document.addEventListener("DOMContentLoaded", () => {
         const author = document.createElement("p");
         author.textContent = `By: ${post.author}`;
 
+        const category = document.createElement("p");
+        category.textContent = `Category: ${post.category}`;
+
         const content = document.createElement("p");
         content.textContent = post.content;
 
-        postDiv.appendChild(title);
-        postDiv.appendChild(author);
-        postDiv.appendChild(content);
+        const likes = document.createElement("button");
+        likes.textContent = `👍 ${post.likes}`;
+        likes.addEventListener("click", () => {
+            post.likes++;
+            renderPosts();
+        });
 
+        const edit = document.createElement("button");
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => editPost(post));
+
+        const remove = document.createElement("button");
+        remove.textContent = "Delete";
+        remove.addEventListener("click", () => deletePost(post));
+
+        const viewDetails = document.createElement("button");
+        viewDetails.textContent = "View Details";
+        viewDetails.addEventListener("click", () => showPostDetails(post));
+
+        postDiv.append(title, author, category, content, likes, edit, remove, viewDetails);
         return postDiv;
     }
+
+    // Edit post
+    function editPost(post) {
+        const newTitle = prompt("Edit Title:", post.title);
+        const newContent = prompt("Edit Content:", post.content);
+        if (newTitle) post.title = newTitle;
+        if (newContent) post.content = newContent;
+        renderPosts();
+    }
+
+    // Delete post
+    function deletePost(post) {
+        const index = posts.indexOf(post);
+        if (index > -1) {
+            posts.splice(index, 1);
+            filteredPosts = [...posts];
+            renderPosts();
+        }
+    }
+
+    // Show post details
+    function showPostDetails(post) {
+        alert(`Title: ${post.title}\nAuthor: ${post.author}\nContent: ${post.content}`);
+    }
+
+    // Dark mode toggle
+    darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
 });
