@@ -3,43 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gaimerI17's dry blog</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Simple Forum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .post, .reply {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .post .content, .reply .content {
+            margin-bottom: 10px;
+        }
+        .post .replies, .reply .replies {
+            margin-left: 20px;
+        }
+        .reply-form {
+            margin-top: 10px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .post-form {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>My Blog</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <!-- Blog Post Template -->
-        <article class="blog-post">
-            <h2 class="post-title">My favourite animal</h2>
-            <div class="post-meta">
-                <span class="post-author">By gaimerI17</span>
-                <span class="post-date">November 25, 2024</span>
-            </div>
-            <div class="post-content">
-                <p>My favourite animal is filo pastry.<br>
-                I read <a href="https://bsky.app/profile/todepond.com/post/3lbru2mltvs2g">this</a> post
-                by TodePond on Bluesky.<br>
-                I immediatrly knew my new favourite animal.
-                </p>
-            </div>
-        </article>
 
-        <!-- Additional blog posts can follow the same structure -->
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 My Blog. All Rights Reserved.</p>
-    </footer>
+<div class="container">
+    <h1>Simple Forum</h1>
+
+    <!-- Post Form -->
+    <div class="post-form">
+        <h2>Create a New Post</h2>
+        <textarea id="postContent" class="form-input" rows="4" placeholder="Write your post here..."></textarea><br>
+        <button class="submit-btn" onclick="createPost()">Post</button>
+    </div>
+
+    <!-- Posts Section -->
+    <div id="postsSection">
+        <h2>Posts</h2>
+        <!-- Posts will be dynamically added here -->
+    </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
