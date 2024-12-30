@@ -4,28 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Forum</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
-    <h1>Simple Forum</h1>
-
-    <!-- Post Form -->
-    <div class="post-form">
-        <h2>Create a New Post</h2>
-        <textarea id="postContent" class="form-input" rows="4" placeholder="Write your post here..."></textarea><br>
-        <button class="submit-btn" onclick="createPost()">Post</button>
-    </div>
-
-    <!-- Posts Section -->
-    <div id="postsSection">
-        <h2>Posts</h2>
-        <!-- Posts will be dynamically added here -->
-    </div>
-</div>
-
-<script src="script.js"></script>
-
+    <header>
+        <h1>Simple Forum</h1>
+    </header>
+    <main>
+        <div id="post-container">
+            <!-- Posts will be loaded here -->
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Simple Forum</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
