@@ -1,52 +1,50 @@
-         body {
-            font-family: Arial, sans-serif;
-            color: white;
-            margin: 0;
-            padding: 0;
-            background-color: black;
-        }
-        .container {
-            width: 60%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .post, .reply {
-            background-color: #ffffff;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .post .content, .reply .content {
-            margin-bottom: 10px;
-        }
-        .post .replies, .reply .replies {
-            margin-left: 20px;
-        }
-        .reply-form {
-            margin-top: 10px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-        .post-form {
-            margin-top: 20px;
-        }     
+/* Basic styles for the forum */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+main {
+    padding: 1em;
+}
+
+#post-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.post {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post h2 {
+    margin-top: 0;
+}
+
+.post p {
+    margin: 0.5em 0;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
