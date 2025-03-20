@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
         topics.forEach((topic, index) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <h3>${topic.title} by ${username}</h3>
+                <h3>${topic.title} by ${topic.user}</h3>
                 <p>${topic.content}</p>
                 <button onclick="viewTopic(${index})">View Topic</button>
                 <button onclick="deleteTopic(${index})">Delete</button>
-                <aside>Posted on ${new Date().toLocaleString()}</aside>
+                <aside>Posted on ${topic.date}</aside>
             `;
             topicList.appendChild(li);
         });
@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const newTopic = {
             title: topicTitle.value,
             content: topicContent.value,
+            user: username,
+            date: new Date().toLocaleString(),
         };
         topics.push(newTopic);
         topicTitle.value = "";
