@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Welcome Topic",
+        "content": "This is the first topic loaded from a file.",
+        "user": "Admin",
+        "date": "2025-03-20 12:00 PM"
+    },
+    {
+        "title": "Second Topic",
+        "content": "Another example topic.",
+        "user": "Test User",
+        "date": "2025-03-19 3:30 PM"
+    }
+]
