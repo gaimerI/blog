@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const topics = [];
+    let topics = [];
     const username = "Test user";
     const topicList = document.getElementById("topic-list");
     const newTopicForm = document.getElementById("new-topic-form");
@@ -22,9 +22,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Fetch topics from external file
+    fetch("topics.json")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to load topics.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            topics = data;
+            renderTopics();
+        })
+        .catch(error => {
+            console.error("Error fetching topics:", error);
+        });
+
     // Add new topic
     newTopicForm.addEventListener("submit", (e) => {
         e.preventDefault();
+        if (!topicTitle.value.trim() || !topicContent.value.trim()) {
+            alert("Please fill out both title and content.");
+            return;
+        }
         const newTopic = {
             title: topicTitle.value,
             content: topicContent.value,
@@ -43,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTopics();
     };
 
-    // View topic (for future expansion)
+    // View topic
     window.viewTopic = function (index) {
         alert(`Viewing Topic:\n\n${topics[index].title}\n\n${topics[index].content}`);
     };
