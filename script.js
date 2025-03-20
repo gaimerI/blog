@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
             li.innerHTML = `
                 <h3>${topic.title} - by ${topic.user}</h3>
                 <p>${topic.content}</p>
-                <button onclick="viewTopic(${index})">View Topic</button>
-                <button onclick="deleteTopic(${index})">Delete</button>
+                <button onclick="viewTopic(${index})"><span class="material-symbols-outlined">visibility</span></button>
+                <button onclick="deleteTopic(${index})"><span class="material-symbols-outlined">remove</span></button>
                 <aside>Posted on ${topic.date}</aside>
             `;
             topicList.appendChild(li);
