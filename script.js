@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         topics.forEach((topic, index) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <h3>${topic.title} by ${topic.user}</h3>
+                <h3>${topic.title} - by ${topic.user}</h3>
                 <p>${topic.content}</p>
                 <button onclick="viewTopic(${index})">View Topic</button>
                 <button onclick="deleteTopic(${index})">Delete</button>
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: topicTitle.value,
             content: topicContent.value,
             user: username,
-            date: new Date().toLocaleString(),
+            date: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
         };
         topics.push(newTopic);
         topicTitle.value = "";
