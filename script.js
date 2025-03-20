@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const topics = [];
+    const username = "Test user";
     const topicList = document.getElementById("topic-list");
     const newTopicForm = document.getElementById("new-topic-form");
     const topicTitle = document.getElementById("topic-title");
@@ -11,10 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
         topics.forEach((topic, index) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <h3>${topic.title}</h3>
+                <h3>${topic.title} by ${username}</h3>
                 <p>${topic.content}</p>
                 <button onclick="viewTopic(${index})">View Topic</button>
                 <button onclick="deleteTopic(${index})">Delete</button>
+                <aside>Posted on ${new Date().toLocaleString()}</aside>
             `;
             topicList.appendChild(li);
         });
