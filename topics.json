@@ -3,12 +3,12 @@
         "title": "Welcome Topic",
         "content": "This is the first topic loaded from a file.",
         "user": "Admin",
-        "date": "2025-03-20 12:00 PM"
+        "date": "21/03/2025, 05:29:31"
     },
     {
         "title": "Second Topic",
         "content": "Another example topic.",
         "user": "Test User",
-        "date": "2025-03-19 3:30 PM"
+        "date": "22/03/2025, 11:00:22"
     }
 ]
