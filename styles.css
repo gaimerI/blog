@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #777777;
+    background-color: black;
     color: #bababa;
 }
 
@@ -18,7 +18,7 @@ main {
     max-width: 800px;
     margin: 20px auto;
     padding: 10px;
-    background: white;
+    background: #777777;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -63,6 +63,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #f1f1f1;
+    color: black;
 }
 
 footer {
