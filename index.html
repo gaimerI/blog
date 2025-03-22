@@ -2,32 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Forum</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add,remove,visibility&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Simple Forum</h1>
-    </header>
-    <main>
-        <section id="topics">
-            <h2>Topics</h2>
-            <ul id="topic-list"></ul>
-        </section>
-        <section id="new-topic">
+    <div class="forum-container">
+        <h1>Internet Forum</h1>
+
+        <div class="post-form">
             <h2>Create New Topic</h2>
-            <form id="new-topic-form">
-                <input type="text" id="topic-title" placeholder="Topic Title" required>
-                <textarea id="topic-content" placeholder="Topic Content" required></textarea>
-                <button type="submit"><span class="material-symbols-outlined">add</span></button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Simple Forum</p>
-    </footer>
+            <input type="text" id="username" placeholder="Your Username">
+            <input type="text" id="title" placeholder="Topic Title">
+            <textarea id="body" placeholder="Topic Body"></textarea>
+            <button onclick="postTopic()">Post</button>
+        </div>
+
+        <div class="topics">
+            <h2>Topics</h2>
+            <div id="topics-container">
+                <p>Loading topics...</p>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
