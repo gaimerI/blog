@@ -1,6 +1,7 @@
 const backendURL = "https://gaimeri17-teachableturquoisewren.web.val.run";
 const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
+const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
 
 
 document.addEventListener("DOMContentLoaded", () => {
