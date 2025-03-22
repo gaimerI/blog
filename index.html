@@ -17,10 +17,23 @@
             <button onclick="postTopic()">Post</button>
         </div>
 
+        <!-- Inside <body> tag, replace the previous topics section with this -->
         <div class="topics">
             <h2>Topics</h2>
             <div id="topics-container">
                 <p>Loading topics...</p>
+            </div>
+        </div>
+
+        <!-- Edit Topic Modal -->
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <h2>Edit Topic</h2>
+                <input type="text" id="edit-title" placeholder="New Title">
+                <textarea id="edit-body" placeholder="New Body"></textarea>
+                <input type="text" id="edit-username" placeholder="Your Username">
+                <button onclick="submitEdit()">Update</button>
+                <button onclick="closeEditModal()">Cancel</button>
             </div>
         </div>
     </div>
