@@ -3,7 +3,15 @@ const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
 
 
-document.addEventListener("DOMContentLoaded", fetchTopics);
+document.addEventListener("DOMContentLoaded", () => {
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+        currentUser = storedUser;
+        updateAuthUI();
+    }
+    fetchTopics();
+});
+
 
 function fetchTopics() {
     fetch(backendURL)
@@ -205,6 +213,7 @@ function loginUser() {
     })
     .then(() => {
         currentUser = username;
+        localStorage.setItem("loggedInUser", currentUser);  // Save to localStorage
         updateAuthUI();
     })
     .catch(error => {
@@ -215,8 +224,10 @@ function loginUser() {
 
 function logoutUser() {
     currentUser = null;
+    localStorage.removeItem("loggedInUser");  // Remove from localStorage
     updateAuthUI();
 }
+
 
 function updateAuthUI() {
     const userInfo = document.getElementById("user-info");
