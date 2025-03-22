@@ -2,7 +2,7 @@ const backendURL = "https://gaimeri17-teachableturquoisewren.web.val.run";
 const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
-
+let userCache = {};
 
 document.addEventListener("DOMContentLoaded", () => {
     const storedUser = localStorage.getItem("loggedInUser");
@@ -10,9 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
         currentUser = storedUser;
         updateAuthUI();
     }
-    fetchTopics();
-});
 
+    fetchUserData().then(() => {
+        fetchTopics();
+    });
+});
 
 function fetchTopics() {
     fetch(backendURL)
@@ -34,6 +36,9 @@ function displayTopics(topics) {
     }
 
     topics.forEach(topic => {
+        const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
+        const iconPath = `profile${profileIconNumber}.svg`;
+    
         const topicDiv = document.createElement("div");
         topicDiv.className = "topic";
         topicDiv.dataset.id = topic.id;
@@ -42,15 +47,19 @@ function displayTopics(topics) {
         topicDiv.innerHTML = `
             <div class="topic-title">${escapeHTML(topic.title)}</div>
             <div class="topic-body">${escapeHTML(topic.body)}</div>
-            <div class="topic-username">Posted by ${escapeHTML(topic.username)}</div>
+            <div class="topic-username">
+                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
+                Posted by ${escapeHTML(topic.username)}
+            </div>
             ${currentUser === topic.username ? `
-            <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
-            <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
+                <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
+                <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
             ` : ''}
         `;
 
-        container.appendChild(topicDiv);
-    });
+    container.appendChild(topicDiv);
+});
+
 }
 
 function postTopic() {
@@ -240,4 +249,20 @@ function updateAuthUI() {
         userInfo.style.display = "none";
         document.getElementById("current-user").innerText = "";
     }
+}
+
+function fetchUserData() {
+    return fetch(userDataAuthURL)
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch user data");
+            return response.json();
+        })
+        .then(users => {
+            users.forEach(user => {
+                userCache[user.username] = user.profile_icon; // Cache by username
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching user data:", error);
+        });
 }
