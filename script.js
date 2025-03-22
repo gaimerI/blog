@@ -34,8 +34,10 @@ function displayTopics(topics) {
             <div class="topic-title">${escapeHTML(topic.title)}</div>
             <div class="topic-body">${escapeHTML(topic.body)}</div>
             <div class="topic-username">Posted by ${escapeHTML(topic.username)}</div>
+            ${currentUser === topic.username ? `
             <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
             <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
+            ` : ''}
         `;
 
         container.appendChild(topicDiv);
@@ -43,7 +45,12 @@ function displayTopics(topics) {
 }
 
 function postTopic() {
-    const username = document.getElementById("username").value.trim();
+    if (!currentUser) {
+        alert("You must be logged in to post.");
+        return;
+    }
+    const username = currentUser;
+
     const title = document.getElementById("title").value.trim();
     const body = document.getElementById("body").value.trim();
 
@@ -145,4 +152,79 @@ function deleteTopic(id, username) {
 
 function escapeHTMLAttr(str) {
     return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+let currentUser = null;
+
+function registerUser() {
+    const username = document.getElementById("register-username").value.trim();
+    const password = document.getElementById("register-password").value.trim();
+
+    if (!username || !password) {
+        alert("Please fill in both fields to register.");
+        return;
+    }
+
+    fetch(registerAuthURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Registration failed");
+        return response.json();
+    })
+    .then(() => {
+        alert("Registration successful. You can now log in.");
+        document.getElementById("register-username").value = "";
+        document.getElementById("register-password").value = "";
+    })
+    .catch(error => {
+        console.error("Error registering:", error);
+        alert("Error registering user.");
+    });
+}
+
+function loginUser() {
+    const username = document.getElementById("login-username").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    if (!username || !password) {
+        alert("Please fill in both fields to login.");
+        return;
+    }
+
+    fetch(loginAuthURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Login failed");
+        return response.json();
+    })
+    .then(() => {
+        currentUser = username;
+        updateAuthUI();
+    })
+    .catch(error => {
+        console.error("Error logging in:", error);
+        alert("Login failed.");
+    });
+}
+
+function logoutUser() {
+    currentUser = null;
+    updateAuthUI();
+}
+
+function updateAuthUI() {
+    const userInfo = document.getElementById("user-info");
+    if (currentUser) {
+        userInfo.style.display = "block";
+        document.getElementById("current-user").innerText = currentUser;
+    } else {
+        userInfo.style.display = "none";
+        document.getElementById("current-user").innerText = "";
+    }
 }
