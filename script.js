@@ -215,6 +215,7 @@ function loginUser() {
         currentUser = username;
         localStorage.setItem("loggedInUser", currentUser);  // Save to localStorage
         updateAuthUI();
+        fetchTopics();
     })
     .catch(error => {
         console.error("Error logging in:", error);
