@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background: #181818; /* Dark background */
-    color: #e0e0e0; /* Light text color */
+    background: #181818;
+    color: #e0e0e0;
     margin: 0;
     padding: 0;
 }
@@ -10,29 +10,29 @@ body {
     width: 80%;
     max-width: 800px;
     margin: 30px auto;
-    background: #242424; /* Darker container background */
+    background: #242424;
     padding: 20px;
     border-radius: 6px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 h1, h2 {
-    color: #ffffff; /* White text for headings */
+    color: #ffffff;
 }
 
 input, textarea {
     width: 100%;
     padding: 10px;
     margin: 8px 0;
-    border: 1px solid #555; /* Lighter border for inputs */
+    border: 1px solid #555;
     border-radius: 4px;
-    background: #333; /* Dark input background */
-    color: #e0e0e0; /* Light text color for inputs */
+    background: #333;
+    color: #e0e0e0;
 }
 
 button {
     padding: 10px 20px;
-    background: #007bff; /* Primary button color */
+    background: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -40,18 +40,18 @@ button {
 }
 
 button:hover {
-    background: #0056b3; /* Darker on hover */
+    background: #0056b3;
 }
 
 .topic {
-    border-bottom: 1px solid #444; /* Lighter border for topics */
+    border-bottom: 1px solid #444;
     padding: 10px 0;
 }
 
 .topic-title {
     font-weight: bold;
     font-size: 1.1em;
-    color: #1e90ff; /* Bright blue for topic titles */
+    color: #1e90ff;
 }
 
 .topic-body {
@@ -59,7 +59,7 @@ button:hover {
 }
 
 .topic-username {
-    color: #bbb; /* Lighter gray for usernames */
+    color: #bbb;
     font-size: 0.9em;
 }
 
@@ -67,16 +67,16 @@ button:hover {
     width: 100%;
     margin: 6px 0;
     padding: 8px;
-    border: 1px solid #555; /* Lighter border for topic inputs */
+    border: 1px solid #555;
     border-radius: 4px;
-    background: #333; /* Dark input background */
-    color: #e0e0e0; /* Light text color for topic inputs */
+    background: #333;
+    color: #e0e0e0;
 }
 
 .topic button {
     margin-right: 5px;
     padding: 6px 12px;
-    background-color: #28a745; /* Success button color */
+    background-color: #28a745;
     border: none;
     color: white;
     border-radius: 4px;
@@ -84,23 +84,22 @@ button:hover {
 }
 
 .topic button:hover {
-    background-color: #218838; /* Darker on hover */
+    background-color: #218838;
 }
 
 .topic button:last-of-type {
-    background-color: #dc3545; /* Danger button color */
+    background-color: #dc3545;
 }
 
 .topic button:last-of-type:hover {
-    background-color: #c82333; /* Darker on hover */
+    background-color: #c82333;
 }
 
-<style>
-    .profile-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        margin-right: 6px;
-        vertical-align: middle;
-    }
-</style>
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    filter: invert(100%);
+}
