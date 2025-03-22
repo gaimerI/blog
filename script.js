@@ -1,70 +1,79 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let topics = [];
-    const username = "Test user";
-    const topicList = document.getElementById("topic-list");
-    const newTopicForm = document.getElementById("new-topic-form");
-    const topicTitle = document.getElementById("topic-title");
-    const topicContent = document.getElementById("topic-content");
+const backendURL = "https://gaimeri17-teachableturquoisewren.web.val.run";
 
-    // Render topics
-    function renderTopics() {
-        topicList.innerHTML = "";
-        topics.forEach((topic, index) => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <h3>${topic.title} - by ${topic.user}</h3>
-                <p>${topic.content}</p>
-                <button onclick="viewTopic(${index})"><span class="material-symbols-outlined">visibility</span></button>
-                <button onclick="deleteTopic(${index})"><span class="material-symbols-outlined">remove</span></button>
-                <aside>Posted on ${topic.date}</aside>
-            `;
-            topicList.appendChild(li);
-        });
-    }
+document.addEventListener("DOMContentLoaded", fetchTopics);
 
-    // Fetch topics from external file
-    fetch("topics.json")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to load topics.");
-            }
-            return response.json();
-        })
-        .then(data => {
-            topics = data;
-            renderTopics();
-        })
+function fetchTopics() {
+    fetch(backendURL)
+        .then(response => response.json())
+        .then(topics => displayTopics(topics))
         .catch(error => {
             console.error("Error fetching topics:", error);
+            document.getElementById("topics-container").innerHTML = "<p>Failed to load topics.</p>";
         });
+}
 
-    // Add new topic
-    newTopicForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (!topicTitle.value.trim() || !topicContent.value.trim()) {
-            alert("Please fill out both title and content.");
-            return;
-        }
-        const newTopic = {
-            title: topicTitle.value,
-            content: topicContent.value,
-            user: username,
-            date: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
-        };
-        topics.push(newTopic);
-        topicTitle.value = "";
-        topicContent.value = "";
-        renderTopics();
+function displayTopics(topics) {
+    const container = document.getElementById("topics-container");
+    container.innerHTML = "";
+
+    if (topics.length === 0) {
+        container.innerHTML = "<p>No topics yet. Be the first to post!</p>";
+        return;
+    }
+
+    topics.forEach(topic => {
+        const topicDiv = document.createElement("div");
+        topicDiv.className = "topic";
+
+        topicDiv.innerHTML = `
+            <div class="topic-title">${escapeHTML(topic.title)}</div>
+            <div class="topic-body">${escapeHTML(topic.body)}</div>
+            <div class="topic-username">Posted by ${escapeHTML(topic.username)}</div>
+        `;
+
+        container.appendChild(topicDiv);
     });
+}
 
-    // Delete topic
-    window.deleteTopic = function (index) {
-        topics.splice(index, 1);
-        renderTopics();
-    };
+function postTopic() {
+    const username = document.getElementById("username").value.trim();
+    const title = document.getElementById("title").value.trim();
+    const body = document.getElementById("body").value.trim();
 
-    // View topic
-    window.viewTopic = function (index) {
-        alert(`Viewing Topic:\n\n${topics[index].title}\n\n${topics[index].content}`);
-    };
-});
+    if (!username || !title || !body) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const topicData = { username, title, body };
+
+    fetch(backendURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(topicData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Failed to post topic");
+        return response.json();
+    })
+    .then(() => {
+        // Clear form
+        document.getElementById("username").value = "";
+        document.getElementById("title").value = "";
+        document.getElementById("body").value = "";
+
+        // Refetch topics (light use of backend)
+        fetchTopics();
+    })
+    .catch(error => {
+        console.error("Error posting topic:", error);
+        alert("Error posting topic.");
+    });
+}
+
+function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;',
+        "'": '&#39;', '"': '&quot;'
+    }[tag]));
+}
