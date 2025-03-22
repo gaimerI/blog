@@ -94,3 +94,13 @@ h1, h2 {
 .topic button:last-of-type:hover {
     background-color: #c82333; /* Darker on hover */
 }
+
+<style>
+    .profile-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+</style>
