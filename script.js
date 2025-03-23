@@ -48,8 +48,8 @@ function displayTopics(topics) {
             <div class="topic-title">${escapeHTML(topic.title)}</div>
             <div class="topic-body">${escapeHTML(topic.body)}</div>
             <div class="topic-username">
-                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
                 Posted by ${escapeHTML(topic.username)}
+                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
             </div>
             ${currentUser === topic.username ? `
                 <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
@@ -237,9 +237,12 @@ function logoutUser() {
 
 function updateAuthUI() {
     const userInfo = document.getElementById("user-info");
+    const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
+        const iconPath = `profile${profileIconNumber}.svg`;
     if (currentUser) {
         userInfo.style.display = "block";
         document.getElementById("current-user").innerText = currentUser;
+        document.getElementById("current-profile-icon").src = iconPath;
     } else {
         userInfo.style.display = "none";
         document.getElementById("current-user").innerText = "";
