@@ -406,6 +406,6 @@ function voteTopic(username, id, action) {
     })
     .catch(error => {
         console.error("Error voting on topic:", error);
-        alert("Error voting on topic.");
+        alert(error);
     });
 }
