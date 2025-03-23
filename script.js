@@ -50,31 +50,31 @@ function displayTopics(topics) {
         topicDiv.dataset.username = topic.username;
         // careful with this
         topicDiv.innerHTML = `
-    <div class="topic-title">${escapeHTML(topic.title)}</div>
-    <div class="topic-body">${escapeHTML(topic.body)}</div>
-    <div class="topic-username">
-        Posted by ${escapeHTML(topic.username)}
-        <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
-    </div>
-    <div class="vote-section">
-       <button onclick="voteTopic(${topic.username}, ${topic.id}, 'like')">▲</button>
-       <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
-       <button onclick="voteTopic(${topic.username}, ${topic.id}, 'dislike')">▼</button>
-    </div>
+            <div class="topic-title">${escapeHTML(topic.title)}</div>
+            <div class="topic-body">${escapeHTML(topic.body)}</div>
+            <div class="topic-username">
+                Posted by ${escapeHTML(topic.username)}
+                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
+            </div>
+            <div class="vote-section">
+                <button onclick="voteTopic(${topic.username}, ${topic.id}, 'like')">▲</button>
+                <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
+                <button onclick="voteTopic(${topic.username}, ${topic.id}, 'dislike')">▼</button>
+            </div>
 
-    ${currentUser === topic.username ? `
-        <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
-        <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
-    ` : ''}
-    <div class="comment-section"></div>  <!-- ADD THIS -->
-    <input type="text" id="comment-input-${topic.id}" placeholder="Write a comment...">
-    <button onclick="postComment(${topic.id})">Post Comment</button>
-`;
+            ${currentUser === topic.username ? `
+                <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
+                <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
+            ` : ''
+            }
+            <div class="comment-section"></div>
+            <input type="text" id="comment-input-${topic.id}" placeholder="Write a comment...">
+            <button onclick="postComment(${topic.id})">Post Comment</button>
+        `;
 
-    container.appendChild(topicDiv);
+        container.appendChild(topicDiv);
     });
     displayAllComments();
-
 }
 
 function postTopic() {
@@ -383,7 +383,11 @@ function postComment(topicID) {
 }
 
 function voteTopic(username, id, action) {
-    const reactData = { "topicId": id, "username": username, "reaction": action };
+    const reactData = {
+        "topic_id": id,
+        "username": username,
+        "reaction": action
+    };
     fetch(reactionBackendURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
