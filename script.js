@@ -309,7 +309,7 @@ function displayCommentsForTopic(topicID) {
     commentSection.innerHTML = "";
 
     const topicIDNum = Number(topicID);
-    const commentsForTopic = commentCache.filter(c => c.topicID === topicIDNum);
+    const commentsForTopic = commentCache.filter(c => c.topicID == topicIDNum);
 
     if (commentsForTopic.length === 0) {
         commentSection.innerHTML = "<p>No comments yet.</p>";
