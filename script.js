@@ -3,6 +3,7 @@ const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
 const commentBackendURL = "https://gaimeri17-sensitivetealangelfish.web.val.run";
+const reactionBackendURL = "https://gaimeri-teachableturquoisewren.web.val.run/react";
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
@@ -55,6 +56,12 @@ function displayTopics(topics) {
         Posted by ${escapeHTML(topic.username)}
         <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
     </div>
+    <div class="vote-section">
+       <button onclick="voteTopic(${username}, ${topic.id}, 'like')">▲</button>
+       <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
+       <button onclick="voteTopic(${username}, ${topic.id}, 'dislike')">▼</button>
+    </div>
+
     ${currentUser === topic.username ? `
         <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
         <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
@@ -373,4 +380,13 @@ function postComment(topicID) {
         console.error("Error posting comment:", error);
         alert("Error posting comment.");
     });
+}
+
+function voteTopic(username, id, action) {
+    const reactData = { "topicId": id, "username": username, "reaction": action };
+    fetch(reactionBackendURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reactData)
+    })
 }
