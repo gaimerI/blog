@@ -91,8 +91,7 @@ function postTopic() {
         fetchTopics();
     })
     .catch(error => {
-        console.error("Error posting topic:", error);
-        alert("Error posting topic.");
+        // its ok
     });
 }
 
