@@ -3,6 +3,7 @@ const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
 let userCache = {};
+let currentUser = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     const storedUser = localStorage.getItem("loggedInUser");
@@ -85,22 +86,26 @@ function postTopic() {
         body: JSON.stringify(topicData)
     })
     .then(response => {
-        document.getElementById("username").value = "";
-        document.getElementById("title").value = "";
-        document.getElementById("body").value = "";
-        fetchTopics();
+    if (!response.ok) throw new Error("Failed to post topic");
+    return response.json();
     })
-    .catch(error => {
-        // its ok
-    });
-}
+        .then(() => {
+            document.getElementById("title").value = "";
+            document.getElementById("body").value = "";
+            fetchTopics();
+        })
+        .catch(error => {
+            console.error("Error posting topic:", error);
+            alert("Error posting topic.");
+        });
 
 function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, tag => ({
+    return str.replace(/[&<>'"`]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;',
-        "'": '&#39;', '"': '&quot;'
+        "'": '&#39;', '"': '&quot;', '`': '&#96;'
     }[tag]));
 }
+
 
 function editTopic(id, username) {
     const topicDiv = document.querySelector(`.topic[data-id="${id}"]`);
@@ -166,8 +171,6 @@ function deleteTopic(id, username) {
 function escapeHTMLAttr(str) {
     return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-
-let currentUser = null;
 
 function registerUser() {
     const username = document.getElementById("register-username").value.trim();
@@ -237,8 +240,9 @@ function logoutUser() {
 
 function updateAuthUI() {
     const userInfo = document.getElementById("user-info");
-    const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
-        const iconPath = `profile${profileIconNumber}.svg`;
+    const profileIconNumber = userCache[currentUser] || 1;
+    const iconPath = `profile${profileIconNumber}.svg`;
+
     if (currentUser) {
         userInfo.style.display = "block";
         document.getElementById("current-profile-icon").style.display = "block";
