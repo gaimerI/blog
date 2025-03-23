@@ -85,10 +85,6 @@ function postTopic() {
         body: JSON.stringify(topicData)
     })
     .then(response => {
-        if (!response) throw new Error("Failed to post topic");
-        return response.json();
-    })
-    .then(() => {
         document.getElementById("username").value = "";
         document.getElementById("title").value = "";
         document.getElementById("body").value = "";
