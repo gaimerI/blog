@@ -57,7 +57,7 @@ function displayTopics(topics) {
                 <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
             </div>
             <div class="vote-section">
-                <button onclick="voteTopic(${topic.username}, ${topic.id}, 'like')">▲</button>
+                <button onclick="voteTopic('${topic.username}', ${topic.id}, 'like')">▲</button>
                 <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
                 <button onclick="voteTopic(${topic.username}, ${topic.id}, 'dislike')">▼</button>
             </div>
