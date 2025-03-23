@@ -58,7 +58,7 @@ button:hover {
     margin: 5px 0;
 }
 
-.topic-username .comment.username {
+.topic-username .comment-username {
     color: #bbb;
     font-size: 0.9em;
 }
