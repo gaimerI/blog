@@ -54,11 +54,11 @@ button:hover {
     color: #1e90ff;
 }
 
-.topic-body {
+.topic-body .comment-content {
     margin: 5px 0;
 }
 
-.topic-username {
+.topic-username .comment.username {
     color: #bbb;
     font-size: 0.9em;
 }
