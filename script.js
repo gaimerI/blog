@@ -241,10 +241,12 @@ function updateAuthUI() {
         const iconPath = `profile${profileIconNumber}.svg`;
     if (currentUser) {
         userInfo.style.display = "block";
+        document.getElementById("current-profile-icon").style.display = "block";
         document.getElementById("current-user").innerText = currentUser;
         document.getElementById("current-profile-icon").src = iconPath;
     } else {
         userInfo.style.display = "none";
+        document.getElementById("current-profile-icon").style.display = "none";
         document.getElementById("current-user").innerText = "";
     }
 }
