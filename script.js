@@ -2,7 +2,9 @@ const backendURL = "https://gaimeri17-teachableturquoisewren.web.val.run";
 const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
+const commentBackendURL = "https://gaimeri17-sensitivetealangelfish.web.val.run";
 let userCache = {};
+let commentCache = [];
 let currentUser = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchUserData().then(() => {
         fetchTopics();
+        fetchComments();
     });
 });
 
@@ -59,7 +62,8 @@ function displayTopics(topics) {
         `;
 
     container.appendChild(topicDiv);
-});
+    });
+    displayAllComments();
 
 }
 
@@ -271,4 +275,98 @@ function fetchUserData() {
         .catch(error => {
             console.error("Error fetching user data:", error);
         });
+}
+
+function fetchComments() {
+    return fetch(commentBackendURL)
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch comments");
+            return response.json();
+        })
+        .then(comments => {
+            commentCache = comments;
+            displayAllComments();
+        })
+        .catch(error => {
+            console.error("Error fetching comments:", error);
+        });
+}
+
+function displayAllComments() {
+    const topicDivs = document.querySelectorAll(".topic");
+    topicDivs.forEach(topicDiv => {
+        const topicID = topicDiv.dataset.id;
+        displayCommentsForTopic(topicID);
+    });
+}
+
+function displayCommentsForTopic(topicID) {
+    const topicDiv = document.querySelector(`.topic[data-id="${topicID}"]`);
+    const commentSection = topicDiv.querySelector(".comment-section");
+    commentSection.innerHTML = "";
+
+    const commentsForTopic = commentCache.filter(c => c.topicID === topicID);
+    
+    if (commentsForTopic.length === 0) {
+        commentSection.innerHTML = "<p>No comments yet.</p>";
+        return;
+    }
+
+    commentsForTopic.forEach(comment => {
+        const profileIconNumber = userCache[comment.username] || 1;
+        const iconPath = `profile${profileIconNumber}.svg`;
+
+        const commentDiv = document.createElement("div");
+        commentDiv.className = "comment";
+
+        commentDiv.innerHTML = `
+            <div class="comment-content">${escapeHTML(comment.content)}</div>
+            <div class="comment-user">
+                ${escapeHTML(comment.username)}
+                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
+            </div>
+        `;
+        commentSection.appendChild(commentDiv);
+    });
+}
+
+function postComment(topicID) {
+    if (!currentUser) {
+        alert("You must be logged in to comment.");
+        return;
+    }
+
+    const commentInput = document.getElementById(`comment-input-${topicID}`);
+    const content = commentInput.value.trim();
+
+    if (!content) {
+        alert("Comment cannot be empty.");
+        return;
+    }
+
+    const commentData = {
+        username: currentUser,
+        topicID: topicID,
+        content: content
+    };
+
+    fetch(commentBackendURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(commentData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Failed to post comment");
+        return response.json();
+    })
+    .then(() => {
+        // Update cache locally to minimize backend call
+        commentCache.push(commentData);
+        commentInput.value = "";
+        displayCommentsForTopic(topicID);
+    })
+    .catch(error => {
+        console.error("Error posting comment:", error);
+        alert("Error posting comment.");
+    });
 }
