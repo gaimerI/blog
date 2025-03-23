@@ -384,9 +384,9 @@ function postComment(topicID) {
 
 function voteTopic(username, id, action) {
     const reactData = {
-        "topicId": id,
-        "username": username,
-        "reaction": action
+        topicId: id,
+        username: username,
+        reaction: action
     };
     fetch(reactionBackendURL, {
         method: "POST",
@@ -398,14 +398,14 @@ function voteTopic(username, id, action) {
         return response.json();
     })
     .then(data => {
-        // Update vote count
+        // Update vote count with the exact value from backend
         const voteCountElement = document.getElementById(`vote-count-${id}`);
-        if (voteCountElement) {
-            voteCountElement.textContent = "vote"; // assuming backend returns the new vote count
+        if (voteCountElement && data.likes !== undefined) {
+            voteCountElement.textContent = data.likes;
         }
     })
     .catch(error => {
         console.error("Error voting on topic:", error);
-        alert(error);
+        alert(error.message);
     });
 }
