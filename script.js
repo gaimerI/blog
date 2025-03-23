@@ -389,4 +389,19 @@ function voteTopic(username, id, action) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reactData)
     })
+    .then(response => {
+        if (!response.ok) throw new Error("Failed to cast vote");
+        return response.json();
+    })
+    .then(data => {
+        // Update vote count
+        const voteCountElement = document.getElementById(`vote-count-${id}`);
+        if (voteCountElement) {
+            voteCountElement.textContent = data.newVoteCount; // assuming backend returns the new vote count
+        }
+    })
+    .catch(error => {
+        console.error("Error voting on topic:", error);
+        alert("Error voting on topic.");
+    });
 }
