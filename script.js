@@ -98,6 +98,7 @@ function postTopic() {
             console.error("Error posting topic:", error);
             alert("Error posting topic.");
         });
+}
 
 function escapeHTML(str) {
     return str.replace(/[&<>'"`]/g, tag => ({
