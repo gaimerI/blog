@@ -86,19 +86,20 @@ function postTopic() {
         body: JSON.stringify(topicData)
     })
     .then(response => {
-    if (!response.ok) throw new Error("Failed to post topic");
-    return response.json();
+        if (!response.ok) throw new Error("Failed to post topic");
+        return response.json();
     })
-        .then(() => {
-            document.getElementById("title").value = "";
-            document.getElementById("body").value = "";
-            fetchTopics();
-        })
-        .catch(error => {
-            console.error("Error posting topic:", error);
-            alert("Error posting topic.");
-        });
+    .then(() => {
+        document.getElementById("title").value = "";
+        document.getElementById("body").value = "";
+        fetchTopics();
+    })
+    .catch(error => {
+        console.error("Error posting topic:", error);
+        alert("Error posting topic.");
+    });  // <--- THIS is the missing closing bracket!
 }
+
 
 function escapeHTML(str) {
     return str.replace(/[&<>'"`]/g, tag => ({
