@@ -384,7 +384,7 @@ function postComment(topicID) {
 
 function voteTopic(username, id, action) {
     const reactData = {
-        "topic_id": id,
+        "topicId": id,
         "username": username,
         "reaction": action
     };
@@ -401,7 +401,7 @@ function voteTopic(username, id, action) {
         // Update vote count
         const voteCountElement = document.getElementById(`vote-count-${id}`);
         if (voteCountElement) {
-            voteCountElement.textContent = data.newVoteCount; // assuming backend returns the new vote count
+            voteCountElement.textContent = "vote"; // assuming backend returns the new vote count
         }
     })
     .catch(error => {
