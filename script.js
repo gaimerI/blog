@@ -41,7 +41,7 @@ function displayTopics(topics) {
     }
 
     topics.forEach(topic => {
-        const profileIconNumber = userCache[topic.username] || 1;  // default to 1 if not found
+        const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
         const iconPath = `profile${profileIconNumber}.svg`;
     
         const topicDiv = document.createElement("div");
@@ -129,8 +129,8 @@ function editTopic(id, username) {
     const body = topicDiv.querySelector(".topic-body").innerText;
 
     topicDiv.innerHTML = `
-        <input type="text" id="edit-title-${id}" value="${escapeHTML(title)}">
-        <textarea id="edit-body-${id}">${escapeHTML(body)}</textarea>
+        <input type="text" id="edit-title-${id}" value="${escapeHTMLAttr(title)}">
+        <textarea id="edit-body-${id}">${escapeHTMLAttr(body)}</textarea>
         <button onclick="submitEdit(${id}, '${username}')">Save</button>
         <button onclick="fetchTopics()">Cancel</button>
     `;
@@ -371,7 +371,7 @@ function postComment(topicID) {
         return response.json();
     })
     .then(() => {
-        // i have no idea how high/low the rate limit is
+        // Update cache locally to minimize backend call
         commentCache.push(commentData);
         commentInput.value = "";
         displayCommentsForTopic(topicID);
@@ -394,10 +394,11 @@ function voteTopic(username, id, action) {
         body: JSON.stringify(reactData)
     })
     .then(response => {
-        // i'm not feeling optimistic about this
         if (!response.ok) throw new Error("Failed to cast vote");
         return response.json();
     })
+    .then(data => {
+        // Update vote count with the exact value from backend
         const voteCountElement = document.getElementById(`vote-count-${id}`);
         if (voteCountElement && data.likes !== undefined) {
             voteCountElement.textContent = data.likes;
@@ -408,20 +409,3 @@ function voteTopic(username, id, action) {
         alert(error.message);
     });
 }
-
-function debounce(func, wait) {
-    let timeout;
-
-    return function executedFunction(...args) {
-        const context = this;
-
-        const later = () => {
-            timeout = null;
-            func.apply(context, args);
-        };
-
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
