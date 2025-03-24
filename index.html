@@ -14,12 +14,12 @@
             <!-- <input type="text" id="username" placeholder="Your Username"> -->
             <input type="text" id="title" placeholder="Topic Title">
             <textarea id="body" placeholder="Topic Body"></textarea>
-            <button onclick="postTopic()">Post</button>
+            <button onclick="debounce(postTopic, 200)">Post</button>
         </div>
 
         <div class="topics">
             <h2>Topics</h2>
-            <button onClick="window.location.reload();">Refresh Page</button>
+            <button onclick="window.location.reload();">Refresh Page</button>
             <div id="topics-container">
                 <p>Loading topics...</p>
             </div>
