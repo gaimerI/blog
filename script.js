@@ -348,17 +348,26 @@ function postComment(topicID) {
     }
 
     const commentInput = document.getElementById(`comment-input-${topicID}`);
-    const content = commentInput.value.trim();
+    let content = commentInput.value.trim();
 
     if (!content) {
         alert("Comment cannot be empty.");
         return;
     }
 
+    // Extract mentioned users using regex
+    const mentionRegex = /@(\w+)/g;
+    const mentionedUsers = [];
+    let match;
+    while ((match = mentionRegex.exec(content)) !== null) {
+        mentionedUsers.push(match[1]);
+    }
+
     const commentData = {
         username: currentUser,
         topicID: topicID,
-        content: content
+        content: content,
+        mentions: mentionedUsers
     };
 
     fetch(commentBackendURL, {
@@ -381,6 +390,26 @@ function postComment(topicID) {
         alert("Error posting comment.");
     });
 }
+
+function formatCommentText(content) {
+    // Replace mentions with highlighted versions
+    return content.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+}
+
+function displayCommentsForTopic(topicID) {
+    const commentSection = document.getElementById(`comments-${topicID}`);
+    commentSection.innerHTML = "";
+
+    commentCache
+        .filter(comment => comment.topicID === topicID)
+        .forEach(comment => {
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+            commentElement.innerHTML = `<strong>${comment.username}:</strong> ${formatCommentText(comment.content)}`;
+            commentSection.appendChild(commentElement);
+        });
+}
+
 
 function voteTopic(username, id, action) {
     const reactData = {
