@@ -310,37 +310,6 @@ function displayAllComments() {
     });
 }
 
-function displayCommentsForTopic(topicID) {
-    const topicDiv = document.querySelector(`.topic[data-id="${topicID}"]`);
-    const commentSection = topicDiv.querySelector(".comment-section");
-    commentSection.innerHTML = "";
-
-    const topicIDNum = Number(topicID);
-    const commentsForTopic = commentCache.filter(c => c.topicID == topicIDNum);
-
-    if (commentsForTopic.length === 0) {
-        commentSection.innerHTML = "<p>No comments yet.</p>";
-        return;
-    }
-
-    commentsForTopic.forEach(comment => {
-        const profileIconNumber = userCache[comment.username] || 1;
-        const iconPath = `profile${profileIconNumber}.svg`;
-
-        const commentDiv = document.createElement("div");
-        commentDiv.className = "comment";
-
-        commentDiv.innerHTML = `
-            <div class="comment-content">${escapeHTML(comment.content)}</div>
-            <div class="comment-user">
-                ${escapeHTML(comment.username)}
-                <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
-            </div>
-        `;
-        commentSection.appendChild(commentDiv);
-    });
-}
-
 function postComment(topicID) {
     if (!currentUser) {
         alert("You must be logged in to comment.");
@@ -390,6 +359,21 @@ function postComment(topicID) {
         alert("Error posting comment.");
     });
 }
+
+function displayCommentsForTopic(topicID) {
+    const commentSection = document.getElementById(`comments-${topicID}`);
+    commentSection.innerHTML = "";
+
+    commentCache
+        .filter(comment => comment.topicID === topicID)
+        .forEach(comment => {
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+            commentElement.innerHTML = `<strong>${comment.username}:</strong> ${formatCommentText(comment.content)}`;
+            commentSection.appendChild(commentElement);
+        });
+}
+
 
 function formatCommentText(content) {
     // Replace mentions with highlighted versions
