@@ -20,6 +20,11 @@ h1, h2 {
     color: #ffffff;
 }
 
+.mention {
+    color: blue;
+    font-weight: bold;
+}
+
 input, textarea {
     width: 100%;
     padding: 10px;
