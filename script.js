@@ -191,6 +191,8 @@ function escapeHTMLAttr(str) {
 function registerUser() {
     const username = document.getElementById("register-username").value.trim();
     const password = document.getElementById("register-password").value.trim();
+    const profile_icon = 4;
+
 
     if (!username || !password) {
         alert("Please fill in both fields to register.");
@@ -200,7 +202,7 @@ function registerUser() {
     fetch(registerAuthURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, 4 })
+        body: JSON.stringify({ username, password, profile_icon })
     })
     .then(response => {
         if (!response.ok) throw new Error("Registration failed");
