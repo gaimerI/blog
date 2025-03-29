@@ -1,9 +1,9 @@
-const backendURL = "https://gaimeri17-teachableturquoisewren.web.val.run";
-const registerAuthURL = "https://gaimeri17-userauthval.web.val.run/register";
-const loginAuthURL = "https://gaimeri17-userauthval.web.val.run/login";
-const userDataAuthURL = "https://gaimeri17-userauthval.web.val.run/users";
-const commentBackendURL = "https://gaimeri17-sensitivetealangelfish.web.val.run";
-const reactionBackendURL = "https://gaimeri17-teachableturquoisewren.web.val.run/react";
+const backendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run";
+const registerAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/register";
+const loginAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/login";
+const userDataAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/users";
+const commentBackendURL = "https://gaimeri17-forumcommentmanagement.web.val.run";
+const reactionBackendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run/react";
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
@@ -27,7 +27,7 @@ function fetchTopics() {
         .then(topics => displayTopics(topics))
         .catch(error => {
             console.error("Error fetching topics:", error);
-            document.getElementById("topics-container").innerHTML = "<p>Failed to load topics.</p>";
+            document.getElementById("topics-container").innerHTML = `<p>Failed to load topics: ${error}</p>`;
         });
 }
 
@@ -110,7 +110,7 @@ function postTopic() {
     })
     .catch(error => {
         console.error("Error posting topic:", error);
-        alert("Error posting topic.");
+        alert("Error posting topic: " + error);
     });  // <--- THIS was the missing closing bracket you dumbass!
 }
 
@@ -159,7 +159,7 @@ function submitEdit(id, username) {
     .then(() => fetchTopics())
     .catch(error => {
         console.error("Error updating topic:", error);
-        alert("Error updating topic.");
+        alert("Error updating topic: " + error);
     });
 }
 
@@ -213,7 +213,7 @@ function registerUser() {
     })
     .catch(error => {
         console.error("Error registering:", error);
-        alert("Error registering user.");
+        alert("Error registering user: " + error);
     });
 }
 
