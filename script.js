@@ -200,7 +200,7 @@ function registerUser() {
     fetch(registerAuthURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, 4 })
     })
     .then(response => {
         if (!response.ok) throw new Error("Registration failed");
