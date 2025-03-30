@@ -5,7 +5,7 @@ import {
     userDataAuthURL,
     commentBackendURL,
     reactionBackendURL
-} from "./const.js";
+} from "const.js";
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
