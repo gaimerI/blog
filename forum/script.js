@@ -9,11 +9,12 @@ let commentCache = [];
 let currentUser = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const storedUser = localStorage.getItem("loggedInUser");
+    /* const storedUser = localStorage.getItem("loggedInUser");
     if (storedUser) {
         currentUser = storedUser;
         updateAuthUI();
     }
+    */
 
     fetchUserData().then(() => {
         fetchTopics();
@@ -239,7 +240,7 @@ function loginUser() {
     })
     .then(() => {
         currentUser = username;
-        localStorage.setItem("loggedInUser", currentUser);  // Save to localStorage
+        // localStorage.setItem("loggedInUser", currentUser);  // Save to localStorage
         updateAuthUI();
         fetchTopics();
     })
@@ -259,7 +260,7 @@ function logoutUser() {
 function updateAuthUI() {
     const userInfo = document.getElementById("user-info");
     const profileIconNumber = userCache[currentUser] || 1;
-    const iconPath = `profile${profileIconNumber}.svg`;
+    const iconPath = `images/profile${profileIconNumber}.svg`;
 
     if (currentUser) {
         userInfo.style.display = "block";
