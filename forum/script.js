@@ -43,7 +43,7 @@ function displayTopics(topics) {
 
     topics.forEach(topic => {
         const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
-        const iconPath = `profile${profileIconNumber}.svg`;
+        const iconPath = `./images/profile${profileIconNumber}.svg`;
     
         const topicDiv = document.createElement("div");
         topicDiv.className = "topic";
@@ -260,7 +260,7 @@ function logoutUser() {
 function updateAuthUI() {
     const userInfo = document.getElementById("user-info");
     const profileIconNumber = userCache[currentUser] || 1;
-    const iconPath = `images/profile${profileIconNumber}.svg`;
+    const iconPath = `./images/profile${profileIconNumber}.svg`;
 
     if (currentUser) {
         userInfo.style.display = "block";
