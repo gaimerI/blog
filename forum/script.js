@@ -386,6 +386,10 @@ function postComment(topicID) {
 }
 
 function voteTopic(username, id, action) {
+    if (!currentUser) {
+        alert("You must be logged in to vote.");
+        return;
+    }
     const reactData = {
         topicId: id,
         username: username,
