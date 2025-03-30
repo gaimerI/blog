@@ -328,7 +328,7 @@ function displayCommentsForTopic(topicID) {
 
     commentsForTopic.forEach(comment => {
         const profileIconNumber = userCache[comment.username] || 1;
-        const iconPath = `profile${profileIconNumber}.svg`;
+        const iconPath = `./images/profile${profileIconNumber}.svg`;
 
         const commentDiv = document.createElement("div");
         commentDiv.className = "comment";
