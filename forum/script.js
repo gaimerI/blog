@@ -9,12 +9,11 @@ let commentCache = [];
 let currentUser = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    /* const storedUser = localStorage.getItem("loggedInUser");
+    const storedUser = sessionStorage.getItem("loggedInUser");
     if (storedUser) {
         currentUser = storedUser;
         updateAuthUI();
     }
-    */
 
     fetchUserData().then(() => {
         fetchTopics();
@@ -240,7 +239,7 @@ function loginUser() {
     })
     .then(() => {
         currentUser = username;
-        // localStorage.setItem("loggedInUser", currentUser);  // Save to localStorage
+        sessionStorage.setItem("loggedInUser", currentUser);  // Save to sessionStorage
         updateAuthUI();
         fetchTopics();
     })
@@ -252,7 +251,7 @@ function loginUser() {
 
 function logoutUser() {
     currentUser = null;
-    localStorage.removeItem("loggedInUser");  // Remove from localStorage
+    sessionStorage.removeItem("loggedInUser");  // Remove from localStorage
     updateAuthUI();
 }
 
