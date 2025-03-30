@@ -32,6 +32,7 @@ function fetchTopics() {
 }
 
 function displayTopics(topics) {
+function displayTopics(topics) {
     const container = document.getElementById("topics-container");
     container.innerHTML = "";
 
@@ -41,37 +42,24 @@ function displayTopics(topics) {
     }
 
     topics.forEach(topic => {
-        const profileIconNumber = userCache[topic.username] || 1;  // Default to 1 if not found
+        const profileIconNumber = userCache[topic.username] || 1;
         const iconPath = `./images/profile${profileIconNumber}.svg`;
     
         const topicDiv = document.createElement("div");
         topicDiv.className = "topic";
         topicDiv.dataset.id = topic.id;
         topicDiv.dataset.username = topic.username;
-        // careful with this
         topicDiv.innerHTML = `
             <div class="topic-title">${escapeHTML(topic.title)}</div>
-            <div class="topic-body">${escapeHTML(topic.body)}</div>
+            <div class="topic-body">${highlightMentions(escapeHTML(topic.body))}</div>
             <div class="topic-username">
-                Posted by ${escapeHTML(topic.username)}
+                Posted by <span class="mention" onclick="viewProfile('${topic.username}')">${escapeHTML(topic.username)}</span>
                 <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
             </div>
-            <div class="vote-section">
-                <button onclick="voteTopic('${currentUser}', ${topic.id}, 'like')">▲</button>
-                <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
-                <button onclick="voteTopic(${currentUser}, ${topic.id}, 'dislike')">▼</button>
-            </div>
-
-            ${currentUser === topic.username ? `
-                <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
-                <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
-            ` : ''
-            }
             <div class="comment-section"></div>
             <input type="text" id="comment-input-${topic.id}" placeholder="Write a comment...">
             <button onclick="postComment(${topic.id})">Post Comment</button>
         `;
-
         container.appendChild(topicDiv);
     });
     displayAllComments();
@@ -333,9 +321,9 @@ function displayCommentsForTopic(topicID) {
         commentDiv.className = "comment";
 
         commentDiv.innerHTML = `
-            <div class="comment-content">${escapeHTML(comment.content)}</div>
+            <div class="comment-content">${highlightMentions(escapeHTML(comment.content))}</div>
             <div class="comment-user">
-                ${escapeHTML(comment.username)}
+                <span class="mention" onclick="viewProfile('${comment.username}')">${escapeHTML(comment.username)}</span>
                 <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
             </div>
         `;
@@ -414,4 +402,12 @@ function voteTopic(username, id, action) {
         console.error("Error voting on topic:", error);
         alert(error.message);
     });
+}
+
+function highlightMentions(text) {
+    return text.replace(/@([a-zA-Z0-9_]+)/g, '<span class="mention" onclick="viewProfile('$1')">@$1</span>');
+}
+
+function viewProfile(username) {
+    alert(`Viewing profile of ${username}`); // Replace this with actual profile navigation
 }
