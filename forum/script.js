@@ -1,11 +1,9 @@
-import {
-    backendURL,
-    registerAuthURL,
-    loginAuthURL,
-    userDataAuthURL,
-    commentBackendURL,
-    reactionBackendURL
-} from "const.js";
+const backendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run";
+const registerAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/register";
+const loginAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/login";
+const userDataAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/users";
+const commentBackendURL = "https://gaimeri17-forumcommentmanagement.web.val.run";
+const reactionBackendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run/react";
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
