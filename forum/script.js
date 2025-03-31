@@ -32,7 +32,6 @@ function fetchTopics() {
 }
 
 function displayTopics(topics) {
-function displayTopics(topics) {
     const container = document.getElementById("topics-container");
     container.innerHTML = "";
 
