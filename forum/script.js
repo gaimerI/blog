@@ -405,7 +405,7 @@ function voteTopic(username, id, action) {
 }
 
 function highlightMentions(text) {
-    return text.replace(/@([a-zA-Z0-9_]+)/g, '<span class="mention" onclick="viewProfile('$1')">@$1</span>');
+    return text.replace(/@([a-zA-Z0-9_]+)/g, '<span class="mention" onclick="viewProfile(\'$1\')">@$1</span>');
 }
 
 function viewProfile(username) {
