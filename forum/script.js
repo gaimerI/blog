@@ -198,7 +198,7 @@ function registerUser() {
         return;
     }
 
-    if (!validateUsername() {
+    if (!validateUsername(username) {
         alert("Username contains one or more invalid characters.");
         return;
     }
