@@ -55,6 +55,18 @@ function displayTopics(topics) {
                 Posted by <span class="mention" onclick="viewProfile('${topic.username}')">${escapeHTML(topic.username)}</span>
                 <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
             </div>
+
+            <div class="vote-section">
+                <button onclick="voteTopic('${currentUser}', ${topic.id}, 'like')">▲</button>
+                <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
+                <button onclick="voteTopic(${currentUser}, ${topic.id}, 'dislike')">▼</button>
+            </div>
+
+            ${currentUser === topic.username ? `
+                <button onclick="editTopic(${topic.id}, '${topic.username}')">Edit</button>
+                <button onclick="deleteTopic(${topic.id}, '${topic.username}')">Delete</button>
+            ` : ''
+            }
             <div class="comment-section"></div>
             <input type="text" id="comment-input-${topic.id}" placeholder="Write a comment...">
             <button onclick="postComment(${topic.id})">Post Comment</button>
