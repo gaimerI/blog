@@ -198,6 +198,11 @@ function registerUser() {
         return;
     }
 
+    if (!validateUsername() {
+        alert("Username contains one or more invalid characters.");
+        return;
+    }
+    
     fetch(registerAuthURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -421,4 +426,8 @@ function highlightMentions(text) {
 
 function viewProfile(username) {
     alert(`Viewing profile of ${username}`); // Replace this with actual profile navigation
+}
+
+function validateUsername(username) {
+    return /^(?!.*[\s'\"`<>;\\/]).{3,30}$/.test(username);
 }
