@@ -99,7 +99,7 @@ function postTopic() {
         body: JSON.stringify(topicData)
     })
     .then(response => {
-        if (!response.ok) throw new Error("Failed to post topic");
+        if (!response.ok) throw new Error("Failed to post topic" + response.toString());
         return response.json();
     })
     .then(() => {
