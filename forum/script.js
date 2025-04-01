@@ -1,4 +1,4 @@
-const backendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run";
+const backendURL = "https://gaimeri17-forumtopicmanagement.web.val.run";
 const registerAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/register";
 const loginAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/users";
