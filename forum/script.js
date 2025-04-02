@@ -115,10 +115,11 @@ function postTopic() {
 
 
 function escapeHTML(str) {
-    return str.replace(/[&<>'"`]/g, tag => ({
+    let result = str.replace(/[&<>'"`]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;',
         "'": '&#39;', '"': '&quot;', '`': '&#96;'
     }[tag]));
+    return DOMpurify.sanitize(result);
 }
 
 
