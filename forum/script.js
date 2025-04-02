@@ -7,7 +7,6 @@ const reactionBackendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
-const DOMpurify = window.DOMpurify;
 
 document.addEventListener("DOMContentLoaded", () => {
     const storedUser = sessionStorage.getItem("loggedInUser");
@@ -116,11 +115,10 @@ function postTopic() {
 
 
 function escapeHTML(str) {
-    let result = str.replace(/[&<>'"`]/g, tag => ({
+    return str.replace(/[&<>'"`]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;',
         "'": '&#39;', '"': '&quot;', '`': '&#96;'
     }[tag]));
-    return DOMpurify.sanitize(result);
 }
 
 
