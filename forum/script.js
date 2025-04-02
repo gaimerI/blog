@@ -7,6 +7,7 @@ const reactionBackendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
+const DOMpurify = window.DOMpurify;
 
 document.addEventListener("DOMContentLoaded", () => {
     const storedUser = sessionStorage.getItem("loggedInUser");
