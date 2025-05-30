@@ -425,7 +425,7 @@ function highlightMentions(text) {
 }
 
 function viewProfile(username) {
-    window.open('https://gaimeri.github.io/blog/forum/profile.html', '_blank');
+    window.open(`https://gaimeri.github.io/blog/forum/profile.html?username=${username}`, '_blank');
 }
 
 function validateUsername(username) {
