@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .profile {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    .profile h2 {
+      margin: 10px 0 5px;
+    }
+    .profile p {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<div id="profile-container" class="profile">
+  <p>Loading profile...</p>
+</div>
+
+<script>
+  const userDataAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/users"; // Replace with actual URL
+
+  function getUsernameFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('username');
+  }
+
+  async function loadUserProfile() {
+    const username = getUsernameFromURL();
+    const container = document.getElementById('profile-container');
+
+    if (!username) {
+      container.innerHTML = '<p>Error: No username specified in URL.</p>';
+      return;
+    }
+
+    try {
+      const response = await fetch(userDataAuthURL);
+      if (!response.ok) throw new Error('Failed to fetch user data.');
+      const users = await response.json();
+
+      const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+
+      if (!user) {
+        container.innerHTML = `<p>User "${username}" not found.</p>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <img src="https://gaimeri.github.io/blog/forum/images/profile${user.profile_icon}.svg" alt="Profile Icon">
+        <h2>${user.username}</h2>
+        <p><strong>Joined:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+        <p>${user.description || 'No description available.'}</p>
+      `;
+    } catch (error) {
+      container.innerHTML = `<p>Error loading profile: ${error.message}</p>`;
+    }
+  }
+
+  loadUserProfile();
+</script>
+
+</body>
+</html>
