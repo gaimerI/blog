@@ -3,7 +3,7 @@ const registerAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/regis
 const loginAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/login";
 const userDataAuthURL = "https://gaimeri17-forumusermanagement.web.val.run/users";
 const commentBackendURL = "https://gaimeri17-forumcommentmanagement.web.val.run";
-const reactionBackendURL = "https://gaimeri17-forumtopicmanagemement.web.val.run/react";
+const reactionBackendURL = "https://gaimeri17-forumtopicmanagement.web.val.run/react";
 let userCache = {};
 let commentCache = [];
 let currentUser = null;
@@ -331,7 +331,7 @@ function displayCommentsForTopic(topicID) {
 
     commentsForTopic.forEach(comment => {
         const profileIconNumber = userCache[comment.username] || 1;
-        const iconPath = `./images/profile${profileIconNumber}.svg`;
+        const iconPath = `https://gaimeri.github.io/ blog/forum/images/profile${profileIconNumber}.svg`;
 
         const commentDiv = document.createElement("div");
         commentDiv.className = "comment";
