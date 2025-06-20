@@ -331,7 +331,7 @@ function displayCommentsForTopic(topicID) {
 
     commentsForTopic.forEach(comment => {
         const profileIconNumber = userCache[comment.username] || 1;
-        const iconPath = `https://gaimeri.github.io/ blog/forum/images/profile${profileIconNumber}.svg`;
+        const iconPath = `https://gaimeri.github.io/blog/forum/images/profile${profileIconNumber}.svg`;
 
         const commentDiv = document.createElement("div");
         commentDiv.className = "comment";
