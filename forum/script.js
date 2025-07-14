@@ -43,6 +43,7 @@ function displayTopics(topics) {
     topics.forEach(topic => {
         const profileIconNumber = userCache[topic.username] || 1;
         const iconPath = `./images/profile${profileIconNumber}.svg`;
+        const imageHTML = topic.imageURL ? `<img src="${escapeHTML(topic.imageURL)}" alt="Topic Image" class="topic-image">` : '';
     
         const topicDiv = document.createElement("div");
         topicDiv.className = "topic";
@@ -51,6 +52,7 @@ function displayTopics(topics) {
         topicDiv.innerHTML = `
             <div class="topic-title">${escapeHTML(topic.title)}</div>
             <div class="topic-body">${highlightMentions(escapeHTML(topic.body))}</div>
+            ${imageHTML}
             <div class="topic-username">
                 Posted by <span class="mention" onclick="viewProfile('${topic.username}')">${escapeHTML(topic.username)}</span>
                 <img src="${iconPath}" alt="Profile Icon" class="profile-icon">
@@ -58,8 +60,8 @@ function displayTopics(topics) {
 
             <div class="vote-section">
                 <button onclick="voteTopic('${currentUser}', ${topic.id}, 'like')">▲</button>
-                <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
-                <button onclick="voteTopic(${currentUser}, ${topic.id}, 'dislike')">▼</button>
+                <span id="vote-count-${topic.id}">${(topic.likes || 0) - (topic.dislikes || 0)}</span>
+                <button onclick="voteTopic('${currentUser}', ${topic.id}, 'dislike')">▼</button>
             </div>
 
             ${currentUser === topic.username ? `
@@ -82,9 +84,9 @@ function postTopic() {
         return;
     }
     const username = currentUser;
-
     const title = document.getElementById("title").value.trim();
     const body = document.getElementById("body").value.trim();
+    const imageURL = document.getElementById("image-url").value.trim();
 
     if (!username || !title || !body) {
         alert("Please fill in all fields.");
@@ -92,7 +94,8 @@ function postTopic() {
     }
 
     const topicData = { username, title, body };
-
+    if (imageURL) topicData.imageURL = imageURL;
+    
     fetch(backendURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,6 +108,7 @@ function postTopic() {
     .then(() => {
         document.getElementById("title").value = "";
         document.getElementById("body").value = "";
+        document.getElementById("image-url").value = ""; 
         fetchTopics();
     })
     .catch(error => {
