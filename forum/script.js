@@ -43,7 +43,7 @@ function displayTopics(topics) {
     topics.forEach(topic => {
         const profileIconNumber = userCache[topic.username] || 1;
         const iconPath = `./images/profile${profileIconNumber}.svg`;
-        
+    
         const topicDiv = document.createElement("div");
         topicDiv.className = "topic";
         topicDiv.dataset.id = topic.id;
@@ -58,8 +58,8 @@ function displayTopics(topics) {
 
             <div class="vote-section">
                 <button onclick="voteTopic('${currentUser}', ${topic.id}, 'like')">▲</button>
-                <span id="vote-count-${topic.id}">${(topic.likes || 0) - (topic.dislikes || 0)}</span>
-                <button onclick="voteTopic('${currentUser}', ${topic.id}, 'dislike')">▼</button>
+                <span id="vote-count-${topic.id}">${topic.likes - topic.dislikes || 0}</span>
+                <button onclick="voteTopic(${currentUser}, ${topic.id}, 'dislike')">▼</button>
             </div>
 
             ${currentUser === topic.username ? `
@@ -82,6 +82,7 @@ function postTopic() {
         return;
     }
     const username = currentUser;
+
     const title = document.getElementById("title").value.trim();
     const body = document.getElementById("body").value.trim();
 
@@ -91,7 +92,7 @@ function postTopic() {
     }
 
     const topicData = { username, title, body };
-    
+
     fetch(backendURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -104,7 +105,6 @@ function postTopic() {
     .then(() => {
         document.getElementById("title").value = "";
         document.getElementById("body").value = "";
-        document.getElementById("image-url").value = ""; 
         fetchTopics();
     })
     .catch(error => {
@@ -430,4 +430,4 @@ function viewProfile(username) {
 
 function validateUsername(username) {
     return /^(?!.*[\s'\"`<>;\\/]).{3,30}$/.test(username);
-}
+        }
