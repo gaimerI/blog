@@ -94,7 +94,11 @@ function postTopic() {
     }
 
     const topicData = { username, title, body };
-    if (imageURL) topicData.imageURL = imageURL;
+    if (imageURL) {
+        topicData.imageURL = imageURL;
+    } else {
+        topicData.imageURL = '';
+    }
     
     fetch(backendURL, {
         method: "POST",
